@@ -38,3 +38,21 @@ class Movie(Base):
     
     def __repr__(self):
         return f'Movie: {self.title}'
+    
+class Role(Base):
+   __tablename__ = 'roles'
+
+
+   id = Column(Integer, primary_key=True)
+   movie_id = Column(Integer, ForeignKey('movies.id'))
+   actor_id = Column(Integer, ForeignKey('actors.id'))
+   salary = Column(Integer())
+   character_name = Column(String())
+
+
+   movie = relationship("Movie", backref=backref("roles", cascade="all, delete-orphan"))
+   actor = relationship("Actor", backref=backref("roles", cascade="all, delete-orphan"))
+
+
+   def __repr__(self):
+       return f'Role: {self.character_name}'
