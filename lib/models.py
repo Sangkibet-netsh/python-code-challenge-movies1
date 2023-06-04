@@ -60,6 +60,8 @@ class Actor(Base):
     
     def total_salary(self):
         return sum(role.salary for role in self.roles)
+    
+    
 
 
 class Movie(Base):
