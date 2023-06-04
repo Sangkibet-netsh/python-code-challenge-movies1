@@ -3,7 +3,7 @@ import sys
 
 sys.path.append(os.getcwd)
 
-from sqlalchemy import (create_engine, PrimaryKeyConstraint, Column, String, Integer, ForeignKey)
+from sqlalchemy import (create_engine, PrimaryKeyConstraint, Column, String, Integer, ForeignKey, func)
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -11,6 +11,9 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 engine = create_engine('sqlite:///db/movies.db', echo=True)
+
+Session = sessionmaker(bind=engine)
+session = Session()
 
 class Role(Base):
    __tablename__ = 'roles'
@@ -61,7 +64,18 @@ class Actor(Base):
     def total_salary(self):
         return sum(role.salary for role in self.roles)
     
+    def blockbusters(self):
+        return [movie for movie in self.movies if movie.box_office_earnings > 50000000]
     
+    @classmethod
+    def most_successful(cls):
+        return (
+            session.query(cls)
+            .join(Role)
+            .group_by(cls.id)
+            .order_by(func.sum(Role.salary).desc())
+            .first()
+        )
 
 
 class Movie(Base):
