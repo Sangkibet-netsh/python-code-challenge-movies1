@@ -35,6 +35,10 @@ class Role(Base):
    
    def movie(self):
         return self.movie
+   
+   def credit(self):
+        return f"{self.character_name}: Played by {self.actor.name}"
+
 
 
 class Actor(Base):
