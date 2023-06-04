@@ -100,4 +100,7 @@ class Movie(Base):
         role = Role(movie=self, actor=actor, character_name=character_name, salary=salary)
         self.roles.append(role)
 
+    def all_credits(self):
+        return [role.credit() for role in self.roles]
+
     
