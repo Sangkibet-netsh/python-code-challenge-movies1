@@ -54,6 +54,9 @@ class Actor(Base):
     
     def roles(self):
         return self.roles
+    
+    def movies(self):
+        return [role.movie for role in self.roles]
 
 
 class Movie(Base):
