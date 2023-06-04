@@ -30,6 +30,9 @@ class Role(Base):
    def __repr__(self):
        return f'Role: {self.character_name}'
    
+   def actor(self):
+        return self.actor
+
 
 class Actor(Base):
     __tablename__ = 'actors'
