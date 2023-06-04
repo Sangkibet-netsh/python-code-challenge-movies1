@@ -90,3 +90,7 @@ class Movie(Base):
     def __repr__(self):
         return f'Movie: {self.title}'
     
+    def roles(self):
+        return self.roles
+
+    
