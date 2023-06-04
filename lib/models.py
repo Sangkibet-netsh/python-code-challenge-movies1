@@ -51,6 +51,9 @@ class Actor(Base):
 
     def __repr__(self):
         return f'Actor: {self.name}'
+    
+    def roles(self):
+        return self.roles
 
 
 class Movie(Base):
