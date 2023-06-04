@@ -95,5 +95,9 @@ class Movie(Base):
     
     def actors(self):
         return [role.actor for role in self.roles]
+    
+    def cast_role(self, actor, character_name, salary):
+        role = Role(movie=self, actor=actor, character_name=character_name, salary=salary)
+        self.roles.append(role)
 
     
