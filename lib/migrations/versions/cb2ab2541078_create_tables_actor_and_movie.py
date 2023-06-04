@@ -29,7 +29,17 @@ def upgrade() -> None:
     sa.Column('box_office_earnings', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
-    
+    op.create_table(
+    'roles',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('movie_id', sa.Integer(), nullable=True),
+    sa.Column('actor_id', sa.Integer(), nullable=True),
+    sa.Column('salary', sa.Integer(), nullable=True),
+    sa.Column('character_name', sa.String(), nullable=True),
+    sa.ForeignKeyConstraint(['actor_id'], ['actors.id'], ),
+    sa.ForeignKeyConstraint(['movie_id'], ['movies.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
 
 
 def downgrade() -> None:

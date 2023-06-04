@@ -50,7 +50,7 @@ class Actor(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String())
 
-    # movies = relationship("Movie", secondary="", back_populates="actor")
+    movies = relationship("Movie", secondary="", back_populates="actor")
 
     def __repr__(self):
         return f'Actor: {self.name}'
@@ -85,28 +85,36 @@ class Movie(Base):
     title = Column(String())
     box_office_earnings = Column(Integer())
 
-    # actors = relationship("Role", back_populates="movie")
+    actors = relationship("Role", back_populates="movie")
+    
+
     
     def __repr__(self):
         return f'Movie: {self.title}'
     
+    
     def roles(self):
         return self.roles
     
+    
     def actors(self):
         return [role.actor for role in self.roles]
+    
     
     def cast_role(self, actor, character_name, salary):
         role = Role(movie=self, actor=actor, character_name=character_name, salary=salary)
         self.roles.append(role)
 
+
     def all_credits(self):
         return [role.credit() for role in self.roles]
+    
     
     def fire_actor(self, actor):
         role = next((role for role in self.roles if role.actor == actor), None)
         if role:
             self.roles.remove(role)
+    
 
 
     
