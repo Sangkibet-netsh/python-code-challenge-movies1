@@ -102,5 +102,11 @@ class Movie(Base):
 
     def all_credits(self):
         return [role.credit() for role in self.roles]
+    
+    def fire_actor(self, actor):
+        role = next((role for role in self.roles if role.actor == actor), None)
+        if role:
+            self.roles.remove(role)
+
 
     
