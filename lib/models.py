@@ -32,6 +32,9 @@ class Role(Base):
    
    def actor(self):
         return self.actor
+   
+   def movie(self):
+        return self.movie
 
 
 class Actor(Base):
