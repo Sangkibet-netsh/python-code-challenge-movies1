@@ -4,7 +4,7 @@ import sys
 sys.path.append(os.getcwd)
 
 from sqlalchemy import (create_engine, PrimaryKeyConstraint, Column, String, Integer, ForeignKey, func)
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship, backref,sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -26,17 +26,16 @@ class Role(Base):
    character_name = Column(String())
 
 
-   movie = relationship("Movie", backref=backref("roles", cascade="all, delete-orphan"))
-   actor = relationship("Actor", backref=backref("roles", cascade="all, delete-orphan"))
-
+   actor = relationship("Actor", backref=backref("roles"))
+   movie = relationship("Movie", backref=backref("roles"))
 
    def __repr__(self):
        return f'Role: {self.character_name}'
    
-   def actor(self):
+   def actor1(self):
         return self.actor
    
-   def movie(self):
+   def movie1(self):
         return self.movie
    
    def credit(self):
@@ -50,7 +49,7 @@ class Actor(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String())
 
-    movies = relationship("Movie", secondary="", back_populates="actor")
+    # movies = relationship("Movie", secondary="", back_populates="actor")
 
     def __repr__(self):
         return f'Actor: {self.name}'
@@ -85,7 +84,7 @@ class Movie(Base):
     title = Column(String())
     box_office_earnings = Column(Integer())
 
-    actors = relationship("Role", back_populates="movie")
+    # actors = relationship("Role", back_populates="movie")
     
 
     
@@ -117,4 +116,6 @@ class Movie(Base):
     
 
 
-    
+Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
